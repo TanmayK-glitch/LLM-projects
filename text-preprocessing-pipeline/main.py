@@ -29,7 +29,7 @@ class Tokenizer:
         text = re.sub(r'\s+([,.:;?!"()\'])', r'\1', text)
         return text
 
-print("--- Testing Custom Tokenizer ---")
+print("Testing Custom Tokenizer: ")
 preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', raw_text)
 preprocessed = [item.strip() for item in preprocessed if item.strip()]
 
@@ -43,14 +43,12 @@ print("Encoded sample (first 50 tokens):", encoded[:50])
 print("Decoded sample:", tokenizer.decode(encoded[:50]))
 
 
-# 3. PyTorch Dataset and DataLoader with tiktoken
-print("\n--- Testing PyTorch Dataset & DataLoader with tiktoken ---")
+print("\nTesting PyTorch Dataset & DataLoader with tiktoken ")
 class GPTDatasetV1(Dataset):
     def __init__(self, txt, tokenizer, max_length, stride):
         self.input_ids = []
         self.output_ids = []
 
-        # tokenizer here is expected to be an encoder with an `encode` method
         token_ids = tokenizer.encode(txt, allowed_special={"<|endoftext|>"})
 
         for i in range(0, len(token_ids) - max_length, stride):
@@ -87,8 +85,7 @@ inputs, targets = next(data_iter)
 print("Inputs:\n", inputs)
 print("Outputs:\n", targets)
 
-# 4. Token Embedding layer
-print("\n--- Token Embedding Layer ---")
+print("\nToken Embedding Layer: ")
 vocab_size = 50257
 output_dim = 256
 token_embedding_layer = torch.nn.Embedding(vocab_size, output_dim)
